@@ -100,6 +100,7 @@ private:
 		sm.registerState(StateSample(), StateName::SAMPLE);
 		sm.registerState(StateDry(), StateName::DRY);
 		sm.registerState(StatePreserve(), StateName::PRESERVE);
+		sm.registerState(StateReverseAir(), StateName::CLEAN);
 
 		// Registering components. The order here should not matter
 		addComponent(sm);

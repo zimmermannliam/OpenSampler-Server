@@ -26,6 +26,22 @@ void StateStop::enter(KPStateMachine & sm) {
 	sm.transitionTo(StateName::IDLE);
 }
 
+void StateReverseAir::enter(KPStateMachine & sm) {
+	println("StateReverseAir");
+
+	Application & app = *static_cast<Application *>(sm.controller);
+
+	app.shift.setAllRegistersLow();
+	app.shift.writeLatchOut();
+	app.shift.setPin(FlushValvePinNumber, HIGH);
+	app.shift.write();
+	app.pump.on(Direction::reverse);
+
+	setTimeCondition(time, [&]() {
+		sm.transitionTo(StateName::STOP);
+	});
+}
+
 void StatePreserve::enter(KPStateMachine & sm) {
 	println("StatePreserve");
 
@@ -40,7 +56,7 @@ void StatePreserve::enter(KPStateMachine & sm) {
 	app.pump.on();
 
 	setTimeCondition(time, [&]() {
-		sm.transitionTo(StateName::STOP);
+		sm.transitionTo(StateName::CLEAN);
 	});
 }
 

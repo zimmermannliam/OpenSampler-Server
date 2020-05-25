@@ -1,11 +1,10 @@
 AccessModifierOffset: -4, 
 SpaceAfterCStyleCast: true, 
-IndentPPDirectives: BeforeHash, 
-AlignAfterOpenBracket: DontAlign, 
-AlignConsecutiveAssignments: true, 
-AlignConsecutiveMacros: true, 
-AlignOperands: true, 
-AllowAllArgumentsOnNextLine: false, 
+AlignAfterOpenBracket: DontAlign
+AlignConsecutiveAssignments: true
+AlignConsecutiveMacros: true
+AlignOperands: true
+AllowAllArgumentsOnNextLine: false
 AllowShortBlocksOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortLambdasOnASingleLine: All
