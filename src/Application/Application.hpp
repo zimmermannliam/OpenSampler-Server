@@ -8,6 +8,7 @@
 #include <Action.hpp>
 
 #include <Procedures/Main.hpp>
+#include <Procedures/New.hpp>
 
 #include <Application/Config.hpp>
 #include <Application/Constants.hpp>
@@ -124,12 +125,16 @@ private:
 
 		// Register states
 		sm.addObserver(status);
-		sm.registerState(StateIdle(), StateName::IDLE);
-		sm.registerState(StateStop(), StateName::STOP);
-		sm.registerState(StateFlush(), StateName::FLUSH);
-		sm.registerState(StateSample(), StateName::SAMPLE);
-		sm.registerState(StateDry(), StateName::DRY);
-		sm.registerState(StatePreserve(), StateName::PRESERVE);
+		sm.registerState(NewFlush("offshotpreload"), "flush1");
+		sm.registerState(OffshootPreload(), "offshootpreload");
+		sm.registerState(NewFlush("offshootclean"), "flush2");
+		sm.registerState(NewFlush("sample"), "flush3");
+
+		// sm.registerState(StateStop(), StateName::STOP);
+		// sm.registerState(StateFlush(), StateName::FLUSH);
+		// sm.registerState(StateSample(), StateName::SAMPLE);
+		// sm.registerState(StateDry(), StateName::DRY);
+		// sm.registerState(StatePreserve(), StateName::PRESERVE);
 
 		// Load configuration from file and initialize status object
 		JsonFileLoader loader;

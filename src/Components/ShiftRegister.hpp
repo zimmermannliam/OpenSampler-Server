@@ -26,21 +26,22 @@
 class ShiftRegister : public KPComponent {
 public:
 	const int capacityPerRegister = 8;
-	const int capacity;
 	const int registersCount;
 
-	int dataPin	 = 0;
-	int clockPin = 0;
-	int latchPin = 0;
+	const int dataPin;
+	const int clockPin;
+	const int latchPin;
 
 	int8_t * registers;
 	BitOrder bitOrder = MSBFIRST;
 
 public:
-	ShiftRegister(const char * name, int capacity, int data, int clock, int latch)
+	ShiftRegister(const char * name, int registerCount, int data, int clock, int latch)
 		: KPComponent(name),
-		  capacity(capacity),
-		  registersCount(capacity / capacityPerRegister) {
+		  registersCount(registerCount),
+		  dataPin(data),
+		  clockPin(clock),
+		  latchPin(latch) {
 		registers = new int8_t[registersCount]();
 		setRegisterPins(data, clock, latch);
 	}
@@ -72,9 +73,6 @@ public:
 	// in daisy chain mode.
 	// ────────────────────────────────────────────────────────────────────────────────
 	void setRegisterPins(int data, int clock, int latch) {
-		dataPin	 = data;
-		clockPin = clock;
-		latchPin = latch;
 		pinMode(dataPin, OUTPUT);
 		pinMode(clockPin, OUTPUT);
 		pinMode(latchPin, OUTPUT);
@@ -111,7 +109,7 @@ public:
 	// Set invidual pin of the register high/low
 	// ────────────────────────────────────────────────────────────────────────────────
 	void setPin(int index, bool signal) {
-		if (index < 0 || index >= capacity) {
+		if (index < 0 || index >= registersCount * capacityPerRegister) {
 			return;
 		}
 
